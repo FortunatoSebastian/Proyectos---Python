@@ -20,7 +20,7 @@ cursor.execute("""
 
 def agregar_producto():
     os.system("cls")
-    nombre = input("Ingrese nombre del producto: ")
+    nombre = input("Ingrese nombre del producto: ").lower()
     precio = int(input("Ingrese el precio del producto: "))
 
     cursor.execute("INSERT INTO inventario (nombre, precio) VALUES (?, ?)", (nombre, precio))
@@ -28,18 +28,30 @@ def agregar_producto():
 
 def registrar_venta():
     os.system("cls")
-    producto = input("Ingrese el nombre del producto: ")
+    producto = input("Ingrese el nombre del producto: ").lower()
     cantidad = int(input("Ingrese la cantidad que quiera comprar: "))
 
-    cursor.execute("SELECT precio FROM inventario WHERE nombre = ?", (producto,))
-    resultado = cursor.fetchone()
-    
-    if resultado is None:
-        print("Erros: El producto no existe en el Inventario")
-        input("\nPresione Enter para volver al menu...")
-        return
+    cursor.execute("SELECT nombre, precio FROM inventario WHERE nombre LIKE ?", (f"%{producto}%",))
+    resultados = cursor.fetchall()
 
-    cursor.execute("INSERT INTO ventas (producto, cantidad, precio, total) VALUES (?, ?, ?, ?)", (producto, cantidad, resultado[0], cantidad * resultado[0]))
+    if len(resultados) == 0:
+        print("Error: No existe ningún producto con ese nombre")
+        input("\nPresione Enter para volver al menú...")
+        return
+    elif len(resultados) == 1:
+        nombre_final = resultados[0][0]
+        precio_final = resultados[0][1]
+    else:
+        print("Se encontraron varios productos:")
+        for i, p in enumerate(resultados):
+            print(f"{i+1} - {p[0]}: ${p[1]}")
+        opcion = int(input("Ingrese el número del producto: ")) - 1
+        nombre_final = resultados[opcion][0]
+        precio_final = resultados[opcion][1]
+    
+    
+
+    cursor.execute("INSERT INTO ventas (producto, cantidad, precio, total) VALUES (?, ?, ?, ?)", (nombre_final, cantidad, precio_final, cantidad * precio_final))
     conexion.commit()
 
 def ver_inventario():
