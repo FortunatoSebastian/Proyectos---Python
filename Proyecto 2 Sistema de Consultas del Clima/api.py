@@ -1,9 +1,10 @@
 import requests
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 
 load_dotenv()
-API_KEY = os.getenv("APY_KEY")
+API_KEY = os.getenv("API_KEY")
 
 def consultar_clima(ciudad):
 
