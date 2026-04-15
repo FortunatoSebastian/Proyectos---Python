@@ -1,7 +1,7 @@
 import requests
 
 
-API_KEY = "f59ca2002317168cc9dca8f07b0ca8a3"
+API_KEY = "miclave"
 
 def consultar_clima(ciudad):
 

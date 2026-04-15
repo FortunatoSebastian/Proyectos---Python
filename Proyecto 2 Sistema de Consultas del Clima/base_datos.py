@@ -1,7 +1,7 @@
 import sqlite3
 from datetime import datetime
 import csv
-import os
+
 
 QUERY_HISTORIAL = "SELECT * FROM historial"
 

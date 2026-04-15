@@ -52,8 +52,11 @@ def menu():
                 os.system("cls")
 
             case "3":
+                os.system("cls")
+                print("===== Exportar Archivo =======")
                 base_datos.exportar_historial()
-                print("Historial exportado a CSV correctamente")
+                print("Historial exportado a CSV correctamente\n")
+                print("="*30)
                 input("\nPresione Enter para continuar....")
                 os.system("cls")
             case "4":
