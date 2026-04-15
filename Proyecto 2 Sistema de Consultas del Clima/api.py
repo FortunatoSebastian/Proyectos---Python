@@ -1,7 +1,9 @@
 import requests
+import os
+from dotenv import load_dotenv
 
-
-API_KEY = "miclave"
+load_dotenv()
+API_KEY = os.getenv("APY_KEY")
 
 def consultar_clima(ciudad):
 
